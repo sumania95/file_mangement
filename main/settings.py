@@ -25,7 +25,7 @@ SECRET_KEY = 'k74azj)*8$+022kpbt*b$)lq3k75vh-kpw3ou*s3j6^fk=hpj)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['192.168.8.104','localhost','127.0.0.1']
+ALLOWED_HOSTS = ['192.168.8.104','192.168.254.2','localhost','127.0.0.1']
 
 
 MIDDLEWARE = [
