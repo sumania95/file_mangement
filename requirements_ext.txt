@@ -1,0 +1,11 @@
+asgiref
+Django
+django-appconf
+django-crispy-forms
+django-imagefit
+django-mathfilters
+mysqlclient
+PyMySQL
+pytz
+segno
+sqlparse

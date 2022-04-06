@@ -1,3 +1,14 @@
+python39
+wamp64 2.4.46
+
+set "MOD_WSGI_APACHE_ROOTDIR=C:\wamp64\bin\apache\apache2.4.46"
+
+pip install mod_wsgi==4.7.0
+
+mod_wsgi-express module-config
+
+
+
 LoadFile "c:/users/user/appdata/local/programs/python/python39/python39.dll"
 LoadModule wsgi_module "c:/users/user/appdata/local/programs/python/python39/lib/site-packages/mod_wsgi/server/mod_wsgi.cp39-win_amd64.pyd"
 WSGIPythonHome "c:/users/user/appdata/local/programs/python/python39"
@@ -33,3 +44,7 @@ WSGIScriptAlias / "D:/Project/file_management/main/wsgi.py"
 ErrorLog "S:/path/to/project-root/logs/apache.error.log"
 CustomLog "S:/path/to/project-root/logs/apache.custom.log" common
 </VirtualHost>
+
+winpty python manage_production.py runserver
+winpty python manage_production.py collectstatic
+winpty python manage_production.py createsuperuser
