@@ -23,7 +23,24 @@
   <link rel="stylesheet" href="{% static 'premium/assets/sweetalert2/sweetalert2.min.css'%}">
   <!-- vendor css -->
   <link rel="stylesheet" href="{% static 'premium/assets/css/style.css'%}">
+  <style media="screen">
+  .swal2-container {
+    z-index: 20000 !important;
+  }
+  .bg-img {
+      /* The image used */
+      background-image: url("{% static 'tagana_an/ico_logo.jpg' %}");
 
+      /* Control the height of the image */
+      min-height: 100vh;
+
+      /* Center and scale the image nicely */
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 50vh 50vh;
+      position: relative;
+    }
+  </style>
   {% block 'link' %}
 
   {% endblock %}
@@ -38,7 +55,7 @@
   </div>
   <!-- [ Pre-loader ] End -->
   <!-- [ navigation menu ] start -->
-  <nav class="pcoded-navbar menupos-fixed menu-dark">
+  <nav class="pcoded-navbar menupos-fixed menu-light">
     <div class="navbar-wrapper  ">
       <div class="navbar-content scroll-div " >
         <ul class="nav pcoded-inner-navbar ">
@@ -67,7 +84,7 @@
       </div>
     </div>
   </nav>
-  <header class="navbar pcoded-header navbar-expand-lg navbar-light headerpos-fixed header-green">
+  <header class="navbar pcoded-header navbar-expand-lg navbar-light headerpos-fixed header-yellow">
     <div class="m-header">
       <a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a>
       <a href="{% url 'dashboard' %}" class="b-brand text-center">
