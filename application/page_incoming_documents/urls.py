@@ -11,7 +11,7 @@ from .views import (
     Incoming_Document_Table_AJAXView,
     # Incoming_Document_Print,
 )
-# 127.0.0.1:8000/outgoing_document/
+# 127.0.0.1:8000/incoming_document/
 urlpatterns = [
     path('', Incoming_Document_Page.as_view(), name = 'incoming_document'),
     path('create', Incoming_Document_Create.as_view(), name = 'incoming_document_create'),

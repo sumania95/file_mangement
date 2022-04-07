@@ -20,7 +20,8 @@ from django.template import RequestContext
 from django.contrib.auth.mixins import LoginRequiredMixin
 from application.models import (
     Incoming_Document,
-    Incoming_Category
+    Incoming_Category,
+    Year,
 )
 from .forms import (
     Incoming_DocumentForm
@@ -35,29 +36,26 @@ question = 'question'
 
 
 class Incoming_Document_Page(LoginRequiredMixin,TemplateView):
-    template_name = 'pages/incoming_document/page_view.html'
+    template_name = 'pages/incoming_document.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = "Incoming Document"
-        context['URL_CREATE'] = reverse('incoming_document_create')
-        context['URL_TABLE'] = reverse('incoming_document_table_api')
+        context['title'] = "Incoming_Document"
+        incoming_category = Incoming_Category.objects.all().order_by('incoming_category')
         context['incoming_category'] = Incoming_Category.objects.all().order_by('incoming_category')
-
+        context['year'] = Year.objects.all().order_by('-year')
         return context
 
 class Incoming_Document_Create(LoginRequiredMixin,TemplateView):
-    template_name = 'pages/incoming_document/x_page_create.html'
+    template_name = 'components/incoming_document_create.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = "New Incoming Document"
-        context['NAV_ACTIVE'] = "incoming_document_active"
-        context['URL_CREATE'] = reverse('incoming_document_create_api')
+        context['title'] = "New Incoming_Document"
         return context
 
 class Incoming_Document_Create_AJAXView(LoginRequiredMixin,View):
-    template_name = 'pages/incoming_document/page_forms.html'
+    template_name = 'forms/incoming_document_forms.html'
     def get(self, request):
         data = dict()
         form = Incoming_DocumentForm()
@@ -65,10 +63,7 @@ class Incoming_Document_Create_AJAXView(LoginRequiredMixin,View):
             'form': form,
             'is_Create': True,
             'btn_name': "primary",
-            'btn_submit': "button-submit",
             'btn_title': "Submit & Save",
-            'URL_CREATE_UPDATE' : reverse('incoming_document_create_api')
-
         }
         data['html_form'] = render_to_string(self.template_name,context)
         return JsonResponse(data)
@@ -84,13 +79,19 @@ class Incoming_Document_Create_AJAXView(LoginRequiredMixin,View):
                 data['message_title'] = 'Successfully saved.'
                 data['url'] = reverse('incoming_document')
             else:
-                data['valid'] = False
-                data['message_type'] = error
-                data['message_title'] = 'Error connection found.'
+                file = form.instance.file
+                if not file.name.endswith('.pdf'):
+                    data['valid'] = False
+                    data['message_type'] = error
+                    data['message_title'] = 'Please upload pdf file only.'
+                else:
+                    data['valid'] = False
+                    data['message_type'] = error
+                    data['message_title'] = 'Error connection found.'
         return JsonResponse(data)
 
 class Incoming_Document_Update(LoginRequiredMixin,TemplateView):
-    template_name = 'pages/incoming_document/x_page_update.html'
+    template_name = 'components/incoming_document_update.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -99,12 +100,11 @@ class Incoming_Document_Update(LoginRequiredMixin,TemplateView):
             context['incoming_document'] = Incoming_Document.objects.get(id = id)
         except Exception as e:
             pass
-        context['title'] = "Update Incoming Document"
-        context['URL_UPDATE'] = reverse('incoming_document_update_api')
+        context['title'] = "Update Incoming_Document"
         return context
 
 class Incoming_Document_Update_AJAXView(LoginRequiredMixin,View):
-    template_name = 'pages/incoming_document/page_forms.html'
+    template_name = 'forms/incoming_document_forms.html'
     def get(self, request):
         data = dict()
         try:
@@ -113,14 +113,12 @@ class Incoming_Document_Update_AJAXView(LoginRequiredMixin,View):
             id = None
         incoming_document = Incoming_Document.objects.get(pk=id)
         form = Incoming_DocumentForm(instance=incoming_document)
-        print(id)
         context = {
-            'is_Create': False,
             'form': form,
+            'incoming_document':incoming_document,
+            'is_Create': False,
             'btn_name': "warning",
-            'btn_submit': "button-change",
             'btn_title': "Save Changes",
-            'URL_CREATE_UPDATE' : reverse('incoming_document_update_save_api',kwargs={'pk': id})
         }
         data['html_form'] = render_to_string(self.template_name,context)
         return JsonResponse(data)
@@ -138,14 +136,21 @@ class Incoming_Document_Update_Save_AJAXView(LoginRequiredMixin,View):
                 data['message_title'] = 'Successfully updated.'
                 data['url'] = reverse('incoming_document')
             else:
-                data['valid'] = False
-                data['message_type'] = error
-                data['message_title'] = 'Error connection found.'
+                file = form.instance.file
+                if not file.name.endswith('.pdf'):
+                    data['valid'] = False
+                    data['message_type'] = error
+                    data['message_title'] = 'Please upload pdf file only.'
+                else:
+                    data['valid'] = False
+                    data['message_type'] = error
+                    data['message_title'] = 'Error connection found.'
+
         return JsonResponse(data)
 
 class Incoming_Document_Table_AJAXView(LoginRequiredMixin,View):
     queryset = Incoming_Document.objects.all()
-    template_name = 'pages/incoming_document/x_page_table.html'
+    template_name = 'tables/incoming_document_table.html'
     def get(self, request):
         data = dict()
         try:
@@ -161,10 +166,10 @@ class Incoming_Document_Table_AJAXView(LoginRequiredMixin,View):
             search = None
             start = None
             end = None
+        print(category)
         if category or search or start or end:
-            URL_UPDATE = reverse('incoming_document')
             data['form_is_valid'] = True
             data['counter'] = self.queryset.filter(Q(description__icontains = search),incoming_category_id=category).count()
-            record = self.queryset.filter(Q(description__icontains = search),incoming_category_id=category).order_by('description')[int(start):int(end)]
-            data['data'] = render_to_string(self.template_name,{'record':record,'start':start,'URL_UPDATE':URL_UPDATE})
+            incoming_document = self.queryset.filter(Q(description__icontains = search),incoming_category_id=category).order_by('description')[int(start):int(end)]
+            data['data'] = render_to_string(self.template_name,{'incoming_document':incoming_document,'start':start})
         return JsonResponse(data)
