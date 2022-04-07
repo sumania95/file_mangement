@@ -7,33 +7,19 @@
     <div class="card-header btn-page m-0 p-2 pb-0">
       <div class="row">
         <div class="col-md-12">
-          <label>Search</label>
           <table>
             <tr>
               <td>
+                <label>Search</label>
+                <br>
                 <input type="search" class="form-control float-right" placeholder="Search...." name="search" id="search">
               </td>
-            </tr>
-          </table>
-          <hr class="m-2">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <label>Category & Year</label>
-          <table>
-            <tr>
               <td>
-                <select class="form-control" name="category" id="category">
-                  {% for p in category %}
-                  <option value="{{p.id}}">{{p.category}}</option>
-                  {% endfor %}
-                </select>
-              </td>
-              <td>
-                <select class="form-control" name="year" id="year">
-                  {% for p in year %}
-                  <option value="{{p.id}}">{{p.year}}</option>
+                <label>&nbsp;</label>
+                <br>
+                <select class="form-control ml-1" name="category" id="category">
+                  {% for p in incoming_category %}
+                  <option value="{{p.id}}">{{p.incoming_category}}</option>
                   {% endfor %}
                 </select>
               </td>
@@ -44,7 +30,7 @@
       </div>
       <div class="row">
         <div class="col-md-6 pb-0">
-          <a href="{% url 'document_create' %}" type="button" class="btn btn-primary btn-sm" name="button"><i class="feather icon-plus-circle mr-1"></i>New Document</a>
+          <a href="{% url 'incoming_document_create' %}" type="button" class="btn btn-primary btn-sm" name="button"><i class="feather icon-plus-circle mr-1"></i>New Document</a>
         </div>
         <div class="col-md-6 text-right">
           <label id="counter"></label>
@@ -61,6 +47,7 @@
             <tr>
               <th width="1%">#</th>
               <th>Description</th>
+              <th>Category</th>
               <th width="10%">Action</th>
             </tr>
           </thead>
@@ -102,7 +89,7 @@
     var category = $("#category").val();
     var year = $("#year").val();
     $.ajax({
-      url: '{% url 'document_table_api' %}',
+      url: '{% url 'incoming_document_table_api' %}',
       type: 'get',
       data: {start:start,end:end,search:search,category:category,year:year},
       dataType: 'json',

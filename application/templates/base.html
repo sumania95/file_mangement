@@ -48,15 +48,25 @@
           <li class="nav-item">
             <a href="{% url 'dashboard' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
           </li>
-          <li class="nav-item {% block 'document_active' %}{% endblock %}">
-            <a href="{% url 'document' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-download-cloud"></i></span><span class="pcoded-mtext">Records Document</span></a>
+          <li class="nav-item {% block 'incoming_document_active' %}{% endblock %}">
+            <a href="{% url 'incoming_document' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-download-cloud"></i></span><span class="pcoded-mtext">Incoming Documents</span></a>
           </li>
-          <li class="nav-item {% block 'category_active' %}{% endblock %}">
-            <a href="{% url 'category' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-clipboard"></i></span><span class="pcoded-mtext">Category</span></a>
+          <li class="nav-item {% block 'outgoing_document_active' %}{% endblock %}">
+            <a href="{% url 'outgoing_document' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-clipboard"></i></span><span class="pcoded-mtext">Outgoing Documents</span></a>
           </li>
-          <li class="nav-item {% block 'year_active' %}{% endblock %}">
-            <a href="{% url 'year' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file"></i></span><span class="pcoded-mtext">Year</span></a>
+          <!-- <li class="nav-item {% block 'travel_order_active' %}{% endblock %}">
+            <a href="#" class="nav-link "><span class="pcoded-micon"><i class="feather icon-clipboard"></i></span><span class="pcoded-mtext">Travel Order</span></a>
+          </li> -->
+          <!-- <li class="nav-item {% block 'category_active' %}{% endblock %}">
+            <a href="#" class="nav-link "><span class="pcoded-micon"><i class="feather icon-clipboard"></i></span><span class="pcoded-mtext">Category</span></a>
+          </li> -->
+          <li class="nav-item {% block 'order_document_active' %}{% endblock %}">
+            <a href="{% url 'order_document' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file"></i></span><span class="pcoded-mtext">Order Document</span></a>
           </li>
+
+          <!-- <li class="nav-item {% block 'awfawfwf_active' %}{% endblock %}">
+            <a href="#" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file"></i></span><span class="pcoded-mtext"><small>Ordinance & Resolution</small></span></a>
+          </li> -->
           <li class="nav-item">
             <a href="{% url 'security' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-lock"></i></span><span class="pcoded-mtext">Security</span></a>
           </li>

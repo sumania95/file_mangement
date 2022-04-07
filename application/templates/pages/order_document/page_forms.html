@@ -1,15 +1,19 @@
 {% load crispy_forms_tags %}
+
 {% load static %}
 <div class="card-body">
-  <form method="POST" enctype="multipart/form-data" data-url="{% if is_Create %}{% url 'document_create_api' %}{% else %}{% url 'document_update_save_api' document.id %}{% endif %}" class="custom-form">
+  <form method="POST" enctype="multipart/form-data" data-url="{{URL_CREATE_UPDATE}}" class="custom-form">
     {{form|crispy}}
-    <button type="submit" class="btn btn-sm btn-{{btn_name}}" id="button-submit">{{btn_title}}</button>
+    <button type="submit" class="btn btn-sm btn-{{btn_name}}" id="{{btn_submit}}">{{btn_title}}</button>
   </form>
 </div>
 {% block 'script' %}
 <script>
   $(document).on('click', '#button-submit', function(){
     return confirm('Are you sure you want to add this?');
+  });
+  $(document).on('click', '#button-change', function(){
+    return confirm('Are you sure you want to change this?');
   });
   $(document).ready(function () {
     var csrftoken = getCookie('csrftoken');

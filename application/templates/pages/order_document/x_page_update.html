@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block 'document_active' %}active{% endblock %}
+{% block 'order_document_active' %}active{% endblock %}
 
 {% block 'content' %}
 <div class="col-md-12">
@@ -17,7 +17,8 @@
 <script>
   function form_load(){
     $.ajax({
-      url: '{% url 'document_create_api' %}',
+      url: '{{URL_UPDATE}}',
+      data: {'id':"{{order_document.id}}"},
       type: 'get',
       dataType: 'json',
       success:function(data){

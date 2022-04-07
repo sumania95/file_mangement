@@ -28,9 +28,9 @@ error = 'error'
 warning = 'warning'
 question = 'question'
 from application.models import (
-    Document,
+    Incoming_Document,
     Year,
-    Category
+    Incoming_Category
 )
 from django.contrib.auth.models import User
 
@@ -39,11 +39,11 @@ class Home(LoginRequiredMixin,TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['document_count'] = Document.objects.count()
-        context['category_count'] = Category.objects.count()
+        context['document_count'] = Incoming_Document.objects.count()
+        context['category_count'] = Incoming_Category.objects.count()
         context['user_count'] = User.objects.count()
         context['year_count'] = Year.objects.count()
-        total_size = Document.objects.all()
+        total_size = Incoming_Document.objects.all()
         size = 0
         for p in total_size:
             p.file.size

@@ -1,19 +1,18 @@
 from django import forms
 from django.forms import ModelForm
 from application.models import (
-    Document,
+    Incoming_Document,
 )
 
-class DocumentForm(forms.ModelForm):
-    # file = forms.FileField(widget=forms.FileInput(attrs={'accept':'application/pdf'}))
+class Incoming_DocumentForm(forms.ModelForm):
     description = forms.CharField(widget=forms.Textarea(attrs={'rows': 3,'style' : "white-space: pre-wrap"},),)
+    remarks = forms.CharField(widget=forms.Textarea(attrs={'rows': 3,'style' : "white-space: pre-wrap"},),required=False)
     class Meta:
-        model = Document
+        model = Incoming_Document
         fields = [
-            'series_no',
             'description',
-            'category',
-            'year',
+            'incoming_category',
             'file',
             'remarks',
+            'date_received',
         ]
