@@ -6,7 +6,6 @@ urlpatterns = [
     path('outgoing/', include('application.page_outgoing_document.urls')),
     path('order/', include('application.page_order_document.urls')),
     path('ordinance-resolution/', include('application.page_ordinance_resolution_document.urls')),
-    path('year/', include('application.page_year.urls')),
     path('security/', include('application.page_security.urls')),
 
 ]

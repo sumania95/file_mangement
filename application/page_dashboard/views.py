@@ -30,8 +30,9 @@ question = 'question'
 
 from application.models import (
     Incoming_Document,
-    Year,
-    Incoming_Category
+    Outgoing_Document,
+    Order_Document,
+    Ordinance_Resolution_Document,
 )
 from django.contrib.auth.models import User
 
@@ -40,14 +41,12 @@ class Dashboard_Page(LoginRequiredMixin,TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['document_count'] = Incoming_Document.objects.count()
-        context['category_count'] = Incoming_Category.objects.count()
-        context['user_count'] = User.objects.count()
-        context['year_count'] = Year.objects.count()
-        total_size = Incoming_Document.objects.all()
-        size = 0
-        for p in total_size:
-            p.file.size
-            size+=p.file.size
-        context['total_size'] = size
+        context['title_1'] = "Incoming"
+        context['title_2'] = "Outgoing"
+        context['title_3'] = "Order"
+        context['title_4'] = "SB Document"
+        context['incoming_document_count'] = Incoming_Document.objects.count()
+        context['outgoing_document_count'] = Outgoing_Document.objects.count()
+        context['order_document_count'] = Order_Document.objects.count()
+        context['ordinance_resolution_document_count'] = Ordinance_Resolution_Document.objects.count()
         return context

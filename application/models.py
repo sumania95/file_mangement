@@ -59,19 +59,6 @@ class Ordinance_Resolution_Category(models.Model):
     class Meta:
         ordering = ['category']
 
-class Year(models.Model):
-    id                      = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    year                    = models.CharField(max_length = 200)
-    user                    = models.ForeignKey(User, on_delete = models.CASCADE)
-    date_updated            = models.DateTimeField(auto_now = True)
-    date_created            = models.DateTimeField(auto_now_add = True)
-
-    def __str__(self):
-        return str(self.year)
-
-    class Meta:
-        ordering = ['year']
-
 
 class Incoming_Document(models.Model):
     id                      = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
