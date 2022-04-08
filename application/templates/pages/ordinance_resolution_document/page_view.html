@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block 'content' %}
 <div class="col-md-12">
   <div class="card p-0">
@@ -30,7 +29,7 @@
       </div>
       <div class="row">
         <div class="col-md-6 pb-0">
-          <a href="{% url 'incoming_document_create' %}" type="button" class="btn btn-primary btn-sm" name="button"><i class="feather icon-plus-circle mr-1"></i>New Document</a>
+          <a href="{{URL_CREATE}}" type="button" class="btn btn-primary btn-sm" name="button"><i class="feather icon-plus-circle mr-1"></i>New {{title}}</a>
         </div>
         <div class="col-md-6 text-right">
           <label id="counter"></label>
@@ -87,20 +86,28 @@
   function load_data(start,end){
     var search = $("#search").val();
     var category = $("#category").val();
-    var year = $("#year").val();
     $.ajax({
-      url: '{% url 'incoming_document_table_api' %}',
+      url: '{{URL_TABLE}}',
       type: 'get',
-      data: {start:start,end:end,search:search,category:category,year:year},
+      data: {start:start,end:end,search:search,category:category},
       dataType: 'json',
       success:function(data){
         counts = data.counter;
-        $('#counter').html(data.counter + " record(s)");
+        if (counts === 0){
+          $('#counter').html(data.counter + " record");
+        }else{
+          $('#counter').html(data.counter + " records");
+        }
         $('#data_table').html(data.data);
         disabled();
       },
     });
   };
+  $('#category').change(function() {
+    start = 0;
+    end = 10;
+    load_data(start,end);
+  });
   $('#button_prev').click(function() {
     start-=10
     end-=10
@@ -112,16 +119,6 @@
     load_data(start,end);
   });
   $('#search').change(function() {
-    start = 0;
-    end = 10;
-    load_data(start,end);
-  });
-  $('#category').change(function() {
-    start = 0;
-    end = 10;
-    load_data(start,end);
-  });
-  $('#year').change(function() {
     start = 0;
     end = 10;
     load_data(start,end);
