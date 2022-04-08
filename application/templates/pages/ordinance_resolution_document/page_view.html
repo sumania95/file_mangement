@@ -17,8 +17,8 @@
                 <label>&nbsp;</label>
                 <br>
                 <select class="form-control ml-1" name="category" id="category">
-                  {% for p in incoming_category %}
-                  <option value="{{p.id}}">{{p.incoming_category}}</option>
+                  {% for p in category %}
+                  <option value="{{p.id}}">{{p.category}}</option>
                   {% endfor %}
                 </select>
               </td>

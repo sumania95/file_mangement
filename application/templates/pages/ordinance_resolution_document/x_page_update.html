@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block 'incoming_document_active' %}active{% endblock %}
+{% block 'ordinance_resolution_document_active' %}active{% endblock %}
 
 {% block 'content' %}
 <div class="col-md-12">
@@ -18,7 +18,7 @@
   function form_load(){
     $.ajax({
       url: '{{URL_UPDATE}}',
-      data: {'id':"{{incoming_document.id}}"},
+      data: {'id':"{{ordinance_resolution_document.id}}"},
       type: 'get',
       dataType: 'json',
       success:function(data){

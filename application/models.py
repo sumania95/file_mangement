@@ -46,6 +46,19 @@ class Order_Category(models.Model):
     class Meta:
         ordering = ['order_category']
 
+class Ordinance_Resolution_Category(models.Model):
+    id                      = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    category                = models.CharField(max_length = 200)
+    user                    = models.ForeignKey(User, on_delete = models.CASCADE)
+    date_updated            = models.DateTimeField(auto_now = True)
+    date_created            = models.DateTimeField(auto_now_add = True)
+
+    def __str__(self):
+        return str(self.category)
+
+    class Meta:
+        ordering = ['category']
+
 class Year(models.Model):
     id                      = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     year                    = models.CharField(max_length = 200)
@@ -113,3 +126,22 @@ class Order_Document(models.Model):
 
     class Meta:
         ordering = ['date_signed','description']
+
+
+class Ordinance_Resolution_Document(models.Model):
+    id                                     = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    document_number                        = models.CharField(default="00",max_length = 200)
+    category          = models.ForeignKey(Ordinance_Resolution_Category, on_delete = models.CASCADE)
+    description                            = models.CharField(max_length = 5000)
+    remarks                                = models.CharField(default="None",max_length = 5000,blank=True,null=True)
+    file                                   = models.FileField(upload_to='order/', validators=[validate_file_extension])
+    user                                   = models.ForeignKey(User, on_delete = models.CASCADE)
+    date_approved                          = models.DateField(default=timezone.now)
+    date_updated                           = models.DateTimeField(auto_now = True)
+    date_created                           = models.DateTimeField(auto_now_add = True)
+
+    def __str__(self):
+        return str(self.description)
+
+    class Meta:
+        ordering = ['date_approved','description']
