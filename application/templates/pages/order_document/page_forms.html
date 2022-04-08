@@ -1,13 +1,25 @@
 {% load crispy_forms_tags %}
 
 {% load static %}
+{% block 'link' %}
+<link rel="stylesheet" href="{% static 'premium/assets/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css'%}">
+{% endblock %}
 <div class="card-body">
   <form method="POST" enctype="multipart/form-data" data-url="{{URL_CREATE_UPDATE}}" class="custom-form">
     {{form|crispy}}
     <button type="submit" class="btn btn-sm btn-{{btn_name}}" id="{{btn_submit}}">{{btn_title}}</button>
   </form>
 </div>
+
 {% block 'script' %}
+<script src="{% static 'premium/assets/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js'%}"></script>
+<script>
+  var $datepicker1 = $('#id_date_signed');
+  $datepicker1.datepicker({
+    autoclose: true,
+    format : 'yyyy-mm-dd',
+  });
+</script>
 <script>
   $(document).ready(function () {
     var csrftoken = getCookie('csrftoken');
