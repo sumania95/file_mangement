@@ -1,5 +1,5 @@
 asgiref
-Django
+Django==3.1.6
 django-appconf
 django-crispy-forms
 django-imagefit
