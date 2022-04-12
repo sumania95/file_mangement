@@ -165,6 +165,6 @@ class Incoming_Document_Table_AJAXView(LoginRequiredMixin,View):
             URL_UPDATE = reverse('incoming_document')
             data['form_is_valid'] = True
             data['counter'] = self.queryset.filter(Q(description__icontains = search),incoming_category_id=category).count()
-            record = self.queryset.filter(Q(description__icontains = search),incoming_category_id=category).order_by('date_received')[int(start):int(end)]
+            record = self.queryset.filter(Q(description__icontains = search),incoming_category_id=category).order_by('-date_received')[int(start):int(end)]
             data['data'] = render_to_string(self.template_name,{'record':record,'start':start,'URL_UPDATE':URL_UPDATE})
         return JsonResponse(data)
